@@ -1,3 +1,26 @@
+from enum import Enum, IntEnum
+
+class MenuOption:
+    ADD = 1
+    UPDATE = 2
+    DELETE = 3
+    EXIT = 0
+
+class UpdateOption:
+    ID = 1
+    INDEX = 2
+    RETURN = 0
+
+class TaskStatus(Enum):
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+
+class Priority(IntEnum):
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+
 class Utility:
     @staticmethod
     def get_required_input(prompt: str)->str:
@@ -32,3 +55,9 @@ class Utility:
                 return int(value)
             except ValueError:
                 print('Invalid input. Please enter a valid number.')
+
+class TaskNotFound(Exception):
+    """Raised when a task lookup fails."""
+    def __init__(self, message: str = "No Task Found"):
+        super().__init__(message)
+
