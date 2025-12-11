@@ -64,6 +64,7 @@ def main():
 
                     print(f'Current description: {task.description}')
                     new_description = input('Enter new description (leave blank to keep same): ').strip()
+                    new_description = new_description if new_description else task.description
 
                     print(f'Current priority: {task.priority}')
                     while True:
@@ -97,9 +98,9 @@ def main():
                         new_status=new_status
                     )
                     if updated:
-                            print('Task has been updated successfully!')
+                        print('Task has been updated successfully!')
                     else:
-                        print(f'Sorry,task could not be updated, please try again')
+                        print(f'Sorry, task could not be updated, please try again')
                     input('\nPress Enter to return to main menu...')
             elif op_type == MenuOption.DELETE:
                 while(True):

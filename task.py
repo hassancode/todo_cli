@@ -70,6 +70,7 @@ class TaskManager:
     def delete_all(self)->bool:
         """Deletes all tasks from the list."""
         self.tasks.clear()
+        self.task_count = 0
         self._save_tasks()
         return True
 
