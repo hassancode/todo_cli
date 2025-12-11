@@ -50,8 +50,8 @@ class TaskManager:
         if result is None:
             raise TaskNotFound(f'Task with id {id} not found')
         i, t = result
-        t.title = new_title if new_title != '' else t.title
-        t.description = new_description if new_description != '' else t.description
+        t.title = new_title
+        t.description = new_description
         t.priority = new_priority
         t.status = new_status
         self.tasks[i] = t

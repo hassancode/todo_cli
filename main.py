@@ -105,7 +105,7 @@ def main():
             elif op_type == MenuOption.DELETE:
                 while(True):
                     try:
-                        task_id = Utility.get_required_int('Enter taskid (required): ')
+                        task_id = Utility.get_required_int('Enter task id (required): ')
                         deleted = task_manager.delete(task_id)
                         if deleted:
                             print(f'Task id {task_id} has been deleted successfully!')
@@ -113,6 +113,9 @@ def main():
                             print(f'Sorry, Task id {task_id} could not be deleted, please try again')
                         input('\nPress Enter to return to main menu...')
                         break
+                    except TaskNotFound as te:
+                        print(f'{te}\n')
+                        continue
                     except ValueError as ve:
                         print(f'Error: {ve}\n')
                         continue

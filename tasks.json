@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "id": 2,
+        "title": "take the car to the dealer",
+        "description": "tire rotation",
+        "priority": 3,
+        "status": "pending"
+    }
+]
