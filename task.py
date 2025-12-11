@@ -1,4 +1,5 @@
-from utility import Priority, TaskStatus, TaskNotFound, TaskRepository
+from utility import Priority, TaskStatus, TaskNotFound, TaskRepository, console
+from rich.table import Table
 
 class Task:
     def __init__(self, id: int, title: str, description: str, priority: Priority, status: TaskStatus = TaskStatus.PENDING):
@@ -76,12 +77,41 @@ class TaskManager:
 
     def view(self):
         if len(self.tasks) > 0:
-            print('-'*30)
+            table = Table(title="[bold cyan]Your Tasks[/bold cyan]", show_header=True, header_style="bold magenta")
+            table.add_column("ID", style="cyan", justify="center", width=6)
+            table.add_column("Title", style="bold", justify="left")
+            table.add_column("Description", style="dim", justify="left")
+            table.add_column("Priority", justify="center", width=10)
+            table.add_column("Status", justify="center", width=12)
+
             for t in self.tasks:
-                print(f'Id={t.id}, Title={t.title}, Desc={t.description}, Priority={t.priority.name}, Status={t.status.name}')
-            print('-'*30)
+                # Color code priority
+                if t.priority == Priority.HIGH:
+                    priority_str = f"[red]{t.priority.name}[/red]"
+                elif t.priority == Priority.MEDIUM:
+                    priority_str = f"[yellow]{t.priority.name}[/yellow]"
+                else:
+                    priority_str = f"[green]{t.priority.name}[/green]"
+
+                # Color code status
+                if t.status == TaskStatus.COMPLETED:
+                    status_str = f"[green]{t.status.name}[/green]"
+                elif t.status == TaskStatus.IN_PROGRESS:
+                    status_str = f"[blue]{t.status.name}[/blue]"
+                else:
+                    status_str = f"[yellow]{t.status.name}[/yellow]"
+
+                table.add_row(
+                    str(t.id),
+                    t.title,
+                    t.description or "[dim]No description[/dim]",
+                    priority_str,
+                    status_str
+                )
+
+            console.print(table)
         else:
-            print('There is no task yet!')
+            console.print('[yellow]There is no task yet![/yellow]')
 
     def get_by_id(self, id):
         """Get task by id. Returns (index, task) if exists, None otherwise"""

@@ -1,5 +1,8 @@
 import json
 from enum import Enum
+from rich.console import Console
+
+console = Console()
 
 class TaskNotFound(Exception):
     """Exception raised when a task is not found."""
@@ -44,7 +47,7 @@ class Utility:
             try:
                 return int(input(prompt))
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                console.print("[red]Invalid input. Please enter a number.[/red]")
 
     @staticmethod
     def get_required_input(prompt: str) -> str:
@@ -52,7 +55,7 @@ class Utility:
             value = input(prompt).strip()
             if value:
                 return value
-            print("Input cannot be empty.")
+            console.print("[red]Input cannot be empty.[/red]")
 
 class TaskRepository:
     """
