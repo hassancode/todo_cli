@@ -8,7 +8,7 @@ def main():
 
     while(True):
         print()
-        print('Main menu', 10*'-', '1. Add task', '2. Update task', '3. Delete task', '4. View all tasks', '0. Exit', sep='\n')
+        print('Main menu', 10*'-', '1. Add task', '2. Update task', '3. Delete task', '4. View all tasks', '5. Delete all tasks', '0. Exit', sep='\n')
         try:
             op_type = MenuOption(Utility.get_required_int('Choose a main menu option: '))
             if op_type == MenuOption.ADD:
@@ -117,6 +117,17 @@ def main():
                         continue
             elif op_type == MenuOption.VIEW:
                 task_manager.view()
+                input('\nPress Enter to return to main menu...')
+            elif op_type == MenuOption.DELETE_ALL:
+                if len(task_manager.tasks) == 0:
+                    print('There are no tasks to delete!')
+                else:
+                    confirmation = input(f'Are you sure you want to delete all {len(task_manager.tasks)} tasks? (yes/no): ').strip().lower()
+                    if confirmation == 'yes':
+                        task_manager.delete_all()
+                        print('All tasks have been deleted successfully!')
+                    else:
+                        print('Delete all operation cancelled.')
                 input('\nPress Enter to return to main menu...')
             elif op_type == MenuOption.EXIT:
                 break

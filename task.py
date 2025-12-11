@@ -67,6 +67,12 @@ class TaskManager:
         self._save_tasks()
         return True
 
+    def delete_all(self)->bool:
+        """Deletes all tasks from the list."""
+        self.tasks.clear()
+        self._save_tasks()
+        return True
+
     def view(self):
         if len(self.tasks) > 0:
             print('-'*30)

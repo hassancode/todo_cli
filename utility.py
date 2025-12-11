@@ -20,6 +20,7 @@ class MenuOption(Enum):
     UPDATE = 2
     DELETE = 3
     VIEW = 4
+    DELETE_ALL = 5
     EXIT = 0
 
 class UpdateOption(Enum):
