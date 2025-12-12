@@ -4,7 +4,7 @@
         "title": "take the car to the dealer",
         "description": "tire rotation",
         "priority": 3,
-        "status": "pending"
+        "status": "completed"
     },
     {
         "id": 3,

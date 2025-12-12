@@ -35,3 +35,7 @@ To enhance the user experience, the application uses the `rich` library to provi
 - **Styled Menus**: The main menu and other prompts are styled for clarity.
 - **Task Table**: Tasks are displayed in a beautifully formatted table with colors to indicate priority and status, making it easy to get a quick overview of your to-do list.
 - **Informative Messages**: Success, error, and warning messages are color-coded to quickly draw your attention.
+
+## Refactoring with Gemini CLI
+
+I used the Gemini CLI to refactor the codebase. Gemini was able to help me refactor the code one by one, without adding any new files to the project, keeping the structure clean and concise.

@@ -57,28 +57,3 @@ class Utility:
                 return value
             console.print("[red]Input cannot be empty.[/red]")
 
-class TaskRepository:
-    """
-    Handles reading and writing tasks to a file.
-    """
-    def __init__(self, filename="tasks.json"):
-        self._filename = filename
-
-    def read_tasks(self):
-        """
-        Reads tasks from a JSON file and returns a list of Task objects.
-        """
-        from task import Task  # Local import to prevent circular dependency
-        try:
-            with open(self._filename, 'r') as f:
-                tasks_data = json.load(f)
-            return [Task.from_dict(task_data) for task_data in tasks_data]
-        except (FileNotFoundError, json.JSONDecodeError):
-            return []
-
-    def write_tasks(self, tasks):
-        """
-        Writes a list of Task objects to a JSON file.
-        """
-        with open(self._filename, 'w') as f:
-            json.dump([task.to_dict() for task in tasks], f, indent=4)
