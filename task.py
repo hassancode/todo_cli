@@ -1,6 +1,7 @@
 import json
 from utility import Priority, TaskStatus, TaskNotFound, console
 from rich.table import Table
+import sqlite3
 
 class Task:
     def __init__(self, id: int, title: str, description: str, priority: Priority, status: TaskStatus = TaskStatus.PENDING):
@@ -32,8 +33,11 @@ class Task:
         )
 
 class TaskManager:
-    def __init__(self):
-        self._repository = TaskRepository()
+    def __init__(self, storage_type="json"):
+        if storage_type == "sqlite":
+            self._repository = TaskDbRepository()
+        else:
+            self._repository = TaskRepository()
         self.tasks = self._repository.read_tasks()
         self.task_count = max([task.id for task in self.tasks]) if self.tasks else 0
 
@@ -149,3 +153,46 @@ class TaskRepository:
         """
         with open(self._filename, 'w') as f:
             json.dump([task.to_dict() for task in tasks], f, indent=4)
+
+class TaskDbRepository:
+    def __init__(self, db_name="tasks.db"):
+        self.db_name = db_name
+        self._create_table()
+
+    def _connect(self):
+        return sqlite3.connect(self.db_name)
+
+    def _create_table(self):
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS tasks (
+                    id INTEGER PRIMARY KEY,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    priority TEXT NOT NULL,
+                    status TEXT NOT NULL
+                )
+            """)
+            conn.commit()
+
+    def read_tasks(self):
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, title, description, priority, status FROM tasks")
+            rows = cursor.fetchall()
+            return [Task(id, title, desc, Priority[p], TaskStatus[s]) for id, title, desc, p, s in rows]
+
+    def write_tasks(self, tasks):
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM tasks")  # Clear the table first
+            task_data = [
+                (t.id, t.title, t.description, t.priority.name, t.status.name)
+                for t in tasks
+            ]
+            cursor.executemany(
+                "INSERT INTO tasks (id, title, description, priority, status) VALUES (?, ?, ?, ?, ?)",
+                task_data
+            )
+            conn.commit()

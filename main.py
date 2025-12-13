@@ -127,7 +127,7 @@ def _delete_all_tasks(task_manager: TaskManager):
 
 def main():
     """Main function to run the TODO application."""
-    task_manager = TaskManager()
+    task_manager = TaskManager('sqlite')
     console.print()
     console.print('[bold cyan]═════ TODO APP ═════[/bold cyan]\n')
 
