@@ -36,6 +36,10 @@ To enhance the user experience, the application uses the `rich` library to provi
 - **Task Table**: Tasks are displayed in a beautifully formatted table with colors to indicate priority and status, making it easy to get a quick overview of your to-do list.
 - **Informative Messages**: Success, error, and warning messages are color-coded to quickly draw your attention.
 
+### SQLite for Persistent Storage
+
+This application supports SQLite as a configurable persistent storage option. By default, tasks are stored in a `tasks.json` file, but you can easily switch to using a SQLite database for more robust and scalable task management. When enabled, tasks are stored in a `tasks.db` file, providing a more structured and efficient way to handle your to-do list. This feature makes the application more flexible and powerful, catering to different user needs and preferences.
+
 ## Refactoring with Gemini CLI
 
 I used the Gemini CLI to refactor the codebase. Gemini was able to help me refactor the code one by one, without adding any new files to the project, keeping the structure clean and concise.
